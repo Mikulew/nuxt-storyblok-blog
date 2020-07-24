@@ -56,6 +56,10 @@ export default {
    */
   modules: [
     // Doc: https://bootstrap-vue.js.org
+    [
+      "storyblok-nuxt",
+      { accessToken: "29dWemlPlke5Zswd7JZxuAtt", cacheProvider: "memory" }
+    ],
     "bootstrap-vue/nuxt"
   ],
   /*

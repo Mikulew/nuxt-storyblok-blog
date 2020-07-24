@@ -15,29 +15,25 @@
 import PostPreview from "@/components/Blog/PostPreview";
 
 export default {
-  data() {
-    return {
-      posts: [
-        {
-          id: 1,
-          title: "A new beginning",
-          previewText: "This will be awesome, don't miss it!",
-          thumbnailUrl: "https://via.placeholder.com/150",
-          slug: "a-new-beginning",
-        },
-        {
-          id: 2,
-          title: "Vue.js developer returns",
-          previewText: "From Vue.js to React.js and back!",
-          thumbnailUrl: "https://via.placeholder.com/150",
-          slug: "vue-js-developer-returns",
-        },
-      ],
-    };
+  asyncData(context) {
+    return context.app.$storyapi
+      .get("cdn/stories", { version: "draft", starts_with: "blog/" })
+      .then(res => {
+        return {
+          posts: res.data.stories.map(bp => {
+            return {
+              slug: bp.slug,
+              title: bp.content.title,
+              previewText: bp.content.summary,
+              thumbnailUrl: bp.content.thumbnail
+            };
+          })
+        };
+      });
   },
   components: {
-    PostPreview,
-  },
+    PostPreview
+  }
 };
 </script>
 
